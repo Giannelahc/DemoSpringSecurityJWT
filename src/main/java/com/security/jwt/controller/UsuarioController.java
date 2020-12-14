@@ -2,6 +2,7 @@ package com.security.jwt.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,8 +28,15 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuario);
 	}
 	
+	@Secured({"ROLE_USER"})
 	@GetMapping("/lista")
 	public ResponseEntity<?> listar(){
-		return ResponseEntity.ok("listado");
+		return ResponseEntity.ok("listado user");
+	}
+	
+	@Secured({"ROLE_ADMIN"})
+	@GetMapping("/listam")
+	public ResponseEntity<?> listarAdmin(){
+		return ResponseEntity.ok("listado admin");
 	}
 }

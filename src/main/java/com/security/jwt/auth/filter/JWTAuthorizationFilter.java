@@ -48,14 +48,14 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		}
 		
 		//***** Tambien puede cargarse el username y authorities con userDetailsService******
-		//UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtService.getUsername(header));
+		UserDetails userDetails = this.userDetailsService.loadUserByUsername(jwtService.getUsername(header));
 		
 		UsernamePasswordAuthenticationToken authentication = null;
 		
 		//si el token es valido crea el usuario 
 		if(jwtService.validate(header)) {
-			authentication = new UsernamePasswordAuthenticationToken(jwtService.getUsername(header),null,jwtService.getRoles(header));
-			//authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+			//authentication = new UsernamePasswordAuthenticationToken(jwtService.getUsername(header),null,jwtService.getRoles(header));
+			authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 		}
 		LOG.info(authentication.toString());
 		LOG.info(jwtService.validate(header)+"");
